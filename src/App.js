@@ -7,11 +7,11 @@ function App() {
   const [mainData,setMainData]=useState();
   const stakeAmountInput=useRef();
   const [buttonLoading,setButtonLoading]=useState();
-  const [currentRewards,setCurrentRewards]=useState({
-    "0x38FF304b6A62Ba58c41b30B3ca649a7A2005c829":"0"
-  });
-  const vaultAbi=[{"inputs":[{"internalType":"uint256","name":"new_rateH","type":"uint256"},{"internalType":"uint256","name":"new_rateL","type":"uint256"}],"name":"changeRate","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"claimRewards","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"rewardTime","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"stake","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"tokenRewardRateH","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"tokenRewardRateL","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"unstake","outputs":[],"stateMutability":"nonpayable","type":"function"}];
-  const tokenAbi=[
+  const [currentRewards,setCurrentRewards]=useState("0");
+
+
+    const vaultAbi=[{"inputs":[{"internalType":"address","name":"adres","type":"address"}],"name":"changeOwner","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"new_rateH","type":"uint256"},{"internalType":"uint256","name":"new_rateL","type":"uint256"}],"name":"changeRate","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"checkUserRewards","outputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_pid","type":"uint256"},{"internalType":"address","name":"lpStakingContract","type":"address"}],"name":"claimRewardsws","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"}],"name":"emergency","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"rewardTime","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"uint256","name":"_pid","type":"uint256"},{"internalType":"address","name":"lpToken","type":"address"},{"internalType":"address","name":"lpStakingContract","type":"address"}],"name":"stake","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"stakeAmount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"tokenRewardRateH","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"tokenRewardRateL","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_pid","type":"uint256"},{"internalType":"address","name":"lpToken","type":"address"},{"internalType":"address","name":"lpStakingContract","type":"address"}],"name":"unstake","outputs":[],"stateMutability":"nonpayable","type":"function"}]
+    const tokenAbi=[
     {
         "constant": true,
         "inputs": [],
@@ -251,7 +251,7 @@ function App() {
     const _contract = new mainData.web3.eth.Contract(tokenAbi,tokenContractAddress);
     const allowance=await _contract.methods.allowance(mainData.userWallet,contractAddress).call();
     if(!(allowance>0)){
-    await _contract.methods.approve(contractAddress,"1000000000000000000000000000000").send({from:mainData.userWallet})
+    await _contract.methods.approve(contractAddress,"100000000000000000000000000000000000").send({from:mainData.userWallet})
     }
     setButtonLoading(false);
 
@@ -266,12 +266,11 @@ function App() {
     if(mainData?.userWallet && stakeAmountInput.current.value>0){
       
       setButtonLoading(true);
-      for(let i=0;i<tokenPair.length;i++){
-        await approveHandler(tokenPair[i],contract)
-      }
+      await approveHandler(tokenPair,contract)
 
       const _contract = new mainData.web3.eth.Contract(vaultAbi,contract);
-      const tx=await _contract.methods.stake((stakeAmountInput.current.value*(10**18)).toString()).send({from:mainData.userWallet})
+      // CROW-CRO
+      const tx=await _contract.methods.stake((stakeAmountInput.current.value*(10**18)).toString(),"3","0xfC84f7b512BF2A590ED48797aA42CcC817F918a0","0xddfba183782dAbe1518431EecAaF38fF7248a5Ba").send({from:mainData.userWallet})
       if(tx){
         toast.success('Stake succeed.', {
           position: "bottom-right",
@@ -300,12 +299,12 @@ function App() {
   
    
   };
-  const unstakeHandler = async (contract,pairTokenAddress) => {
+  const unstakeHandler = async (contract) => {
     setButtonLoading(true);
     if(mainData?.userWallet){
-    await approveHandler(pairTokenAddress,contract)
     const _contract = new mainData.web3.eth.Contract(vaultAbi,contract);
-    const tx=await _contract.methods.unstake().send({from:mainData.userWallet})
+    // CROW-CRO
+    const tx=await _contract.methods.unstake("3","0xfC84f7b512BF2A590ED48797aA42CcC817F918a0","0xddfba183782dAbe1518431EecAaF38fF7248a5Ba").send({from:mainData.userWallet})
     if(tx){
       toast.success('Unstake succeed.', {
         position: "bottom-right",
@@ -336,7 +335,7 @@ function App() {
     setButtonLoading(true);
     if(mainData?.userWallet){
     const _contract = new mainData.web3.eth.Contract(vaultAbi,contract);
-    const tx=await _contract.methods.claimRewards().send({from:mainData.userWallet})
+    const tx=await _contract.methods.claimRewardsws("3","0xddfba183782dAbe1518431EecAaF38fF7248a5Ba").send({from:mainData.userWallet})
     if(tx){
       toast.success('Harvest succeed.', {
         position: "bottom-right",
@@ -364,19 +363,12 @@ function App() {
   setButtonLoading(false);
   };
 
-  const rewardCalculator = async (contract,pairTokenContract) => {
+  const rewardCalculator = async (contract) => {
     if(mainData?.userWallet){
     const _contract = new mainData.web3.eth.Contract(vaultAbi,contract);
-    const time=await _contract.methods.rewardTime(mainData?.userWallet).call()
-    const tokenRewardRateH=await _contract.methods.tokenRewardRateH().call()
-    const tokenRewardRateL=await _contract.methods.tokenRewardRateL().call()
-    const _contractToken = new mainData.web3.eth.Contract(tokenAbi,pairTokenContract);
-    const pairTokenAmount= await _contractToken.methods.balanceOf(mainData?.userWallet).call();
-    const passedTime=parseInt(Date.now()/1000)-time;
-    const rewardTotal=passedTime/tokenRewardRateL*tokenRewardRateH*(pairTokenAmount/10**18)
-    let newCurrentRewards={...currentRewards};
-    newCurrentRewards[contract]=rewardTotal;
-    setCurrentRewards(newCurrentRewards)
+    const balance=await _contract.methods.checkUserRewards(mainData?.userWallet).call()
+    const rewardTotal=balance/10**18;
+    setCurrentRewards(rewardTotal)
   }
   else{
     toast.error('You need to be connected first.', {
@@ -391,8 +383,11 @@ function App() {
   }
   };
 
+
+
   return (
     <>
+  
     <ToastContainer/>
       <div className="navbar">
         <button onClick={walletConnect} className="main-button connect-button">{mainData?.userWallet?"Connected":"Connect"}</button>
@@ -417,7 +412,7 @@ function App() {
                   </div>
                   <div className="token-earnings d-flex align-items-center justify-content-between w-100">
                     <span className="fs-5 me-2">Earnings</span>
-                    <span className="earnings-text">{parseFloat(currentRewards["0x38FF304b6A62Ba58c41b30B3ca649a7A2005c829"]).toFixed(10)} SPHERE <img onClick={()=>{rewardCalculator("0x38FF304b6A62Ba58c41b30B3ca649a7A2005c829","0x587eEF75710CdFB9a67F95cD747E256D71130d11")}} style={{"cursor":"pointer"}} width={15} src="/arrows-rotate-solid.svg"/></span>
+                    <span className="earnings-text">{parseFloat(currentRewards).toFixed(10)} SPHERE <img onClick={()=>{rewardCalculator("0x6ED0B4730f52a977186DBCB6e712fD13Fd36Db2f")}} style={{"cursor":"pointer"}} width={15} src="/arrows-rotate-solid.svg"/></span>
                     
                   </div>
                   <div className="apr  d-flex align-items-center justify-content-between w-100">
@@ -427,17 +422,17 @@ function App() {
                   <div className="token-menu d-flex flex-column align-items-center justify-content-between w-100">
                     <input ref={stakeAmountInput} defaultValue={1} type="number" className="stake-amount"></input>
                     <div className="button-cont-d">
-                    <button onClick={()=>{stakeHandler("0x38FF304b6A62Ba58c41b30B3ca649a7A2005c829",["0xcDb972E8c80c17AE6ecBb04f52517e938493b0ab","0x956f4E92563b9Fb660F16Ab183F84B4535088931"])}} className="main-button me-1">
+                    <button onClick={()=>{stakeHandler("0x6ED0B4730f52a977186DBCB6e712fD13Fd36Db2f","0xfC84f7b512BF2A590ED48797aA42CcC817F918a0")}} className="main-button me-1">
                      {!buttonLoading?"Stake":<div class="spinner-border spinner-border-sm" role="status"></div>} 
                     </button>
                     <button
-                      onClick={()=>{unstakeHandler("0x38FF304b6A62Ba58c41b30B3ca649a7A2005c829","0x587eEF75710CdFB9a67F95cD747E256D71130d11")}}
+                      onClick={()=>{unstakeHandler("0x6ED0B4730f52a977186DBCB6e712fD13Fd36Db2f")}}
                       className="main-button unstake-button me-1"
                     >
                       {!buttonLoading?"Unstake":<div class="spinner-border spinner-border-sm" role="status"></div>} 
                     </button>
                     <button
-                      onClick={()=>{harvestHandler("0x38FF304b6A62Ba58c41b30B3ca649a7A2005c829")}}
+                      onClick={()=>{harvestHandler("0x6ED0B4730f52a977186DBCB6e712fD13Fd36Db2f")}}
                       className="main-button harvest-button"
                     >
                       {!buttonLoading?"Harvest":<div class="spinner-border spinner-border-sm" role="status"></div>} 
@@ -447,7 +442,7 @@ function App() {
                   </div>
                   <div className="links py-3">
                   <span>View Contract <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
-                  <span className="mt-2">See Pair Contract <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+                  <span  className="mt-2"><a href="https://cronoscan.com/address/0xfC84f7b512BF2A590ED48797aA42CcC817F918a0" target={"_blank"}> See Pair Contract <i class="fa-solid fa-arrow-up-right-from-square"></i></a></span>
                   </div>
                   
                 </div>
