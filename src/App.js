@@ -5,7 +5,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 function App() {
   const [mainData,setMainData]=useState();
-  const stakeAmountInput=useRef();
+  const stakeAmountInputCROUSDC=useRef();
+  const stakeAmountInputUSDCCROW=useRef();
+  const stakeAmountInputCROWCRO=useRef();
   const [buttonLoading,setButtonLoading]=useState();
   const [currentRewardsCROUSDC,setCurrentRewardsCROUSDC]=useState("0");
   const [currentRewardsUSDCCROW,setCurrentRewardsUSDCCROW]=useState("0");
@@ -265,14 +267,23 @@ function App() {
  
   const stakeHandler = async (contract,tokenPair,pid) => {
    
-    if(mainData?.userWallet && stakeAmountInput.current.value>0){
+    if(mainData?.userWallet){
       
       setButtonLoading(true);
       await approveHandler(tokenPair,contract)
-
+      let tx;
       const _contract = new mainData.web3.eth.Contract(vaultAbi,contract);
       // CROW-CRO
-      const tx=await _contract.methods.stake((stakeAmountInput.current.value*(10**18)).toString(),pid,tokenPair,"0xddfba183782dAbe1518431EecAaF38fF7248a5Ba").send({from:mainData.userWallet})
+      if(pid==="3"){
+        tx=await _contract.methods.stake((currentRewardsCROUSDC.current.value*(10**18)).toString(),pid,tokenPair,"0xddfba183782dAbe1518431EecAaF38fF7248a5Ba").send({from:mainData.userWallet})
+      }
+      else if(pid==="2"){
+        tx=await _contract.methods.stake((currentRewardsCROWCRO.current.value*(10**18)).toString(),pid,tokenPair,"0xddfba183782dAbe1518431EecAaF38fF7248a5Ba").send({from:mainData.userWallet})
+      }
+      else if(pid==="1"){
+       tx=await _contract.methods.stake((stakeAmountInputUSDCCROW.current.value*(10**18)).toString(),pid,tokenPair,"0xddfba183782dAbe1518431EecAaF38fF7248a5Ba").send({from:mainData.userWallet})
+      }
+     
       if(tx){
         toast.success('Stake succeed.', {
           position: "bottom-right",
@@ -431,7 +442,7 @@ function App() {
                     <span className="earnings-text">35%</span> */}
                   </div>
                   <div className="token-menu d-flex flex-column align-items-center justify-content-between w-100">
-                    <input ref={stakeAmountInput} defaultValue={1} type="number" className="stake-amount"></input>
+                    <input ref={stakeAmountInputCROUSDC} defaultValue={1} type="number" className="stake-amount"></input>
                     <div className="button-cont-d">
                     <button onClick={()=>{stakeHandler("0x6ED0B4730f52a977186DBCB6e712fD13Fd36Db2f","0xfC84f7b512BF2A590ED48797aA42CcC817F918a0","3")}} className="main-button me-1">
                      {!buttonLoading?"Stake":<div class="spinner-border spinner-border-sm" role="status"></div>} 
@@ -486,7 +497,7 @@ function App() {
                     <span className="earnings-text">35%</span> */}
                   </div>
                   <div className="token-menu d-flex flex-column align-items-center justify-content-between w-100">
-                    <input ref={stakeAmountInput} defaultValue={1} type="number" className="stake-amount"></input>
+                    <input ref={stakeAmountInputUSDCCROW} defaultValue={1} type="number" className="stake-amount"></input>
                     <div className="button-cont-d">
                     <button onClick={()=>{stakeHandler("0x851dBA7B46a586E363F3a77a9Ae42f4BF28dF0e9","0x82E623AA112B03388A153D51142e5F9eA7EcE258","1")}} className="main-button me-1">
                      {!buttonLoading?"Stake":<div class="spinner-border spinner-border-sm" role="status"></div>} 
@@ -544,7 +555,7 @@ function App() {
                     <span className="earnings-text">35%</span> */}
                   </div>
                   <div className="token-menu d-flex flex-column align-items-center justify-content-between w-100">
-                    <input ref={stakeAmountInput} defaultValue={1} type="number" className="stake-amount"></input>
+                    <input ref={stakeAmountInputCROWCRO} defaultValue={1} type="number" className="stake-amount"></input>
                     <div className="button-cont-d">
                     <button onClick={()=>{stakeHandler("0x4565bbdeaFFD9Ffa358daA1fE9B4D8C311aE8C26","0xCd693F158865D071f100444c7F3b96e7463bAe8d","2")}} className="main-button me-1">
                      {!buttonLoading?"Stake":<div class="spinner-border spinner-border-sm" role="status"></div>} 
