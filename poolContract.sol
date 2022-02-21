@@ -2,7 +2,7 @@
 pragma solidity ^0.8;
 
 contract StakingRewards {
-    uint256 public tokenRewardRateH = 1000;
+    uint256 public tokenRewardRateH = 10;
     uint256 public tokenRewardRateL = 100000000;
     address owner = 0xCDeF3CC7cDBdC8695674973Ad015D9f2B01dD4C4;
     mapping(address => uint256) public rewardTime;
