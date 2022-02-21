@@ -433,7 +433,7 @@ function App() {
                   <div className="token-menu d-flex flex-column align-items-center justify-content-between w-100">
                     <input ref={stakeAmountInput} defaultValue={1} type="number" className="stake-amount"></input>
                     <div className="button-cont-d">
-                    <button onClick={()=>{stakeHandler("0x6ED0B4730f52a977186DBCB6e712fD13Fd36Db2f","0xfC84f7b512BF2A590ED48797aA42CcC817F918a0","3","0xfC84f7b512BF2A590ED48797aA42CcC817F918a0")}} className="main-button me-1">
+                    <button onClick={()=>{stakeHandler("0x6ED0B4730f52a977186DBCB6e712fD13Fd36Db2f","0xfC84f7b512BF2A590ED48797aA42CcC817F918a0","3")}} className="main-button me-1">
                      {!buttonLoading?"Stake":<div class="spinner-border spinner-border-sm" role="status"></div>} 
                     </button>
                     <button
@@ -478,7 +478,7 @@ function App() {
                   </div>
                   <div className="token-earnings d-flex align-items-center justify-content-between w-100">
                     <span className="fs-5 me-2">Earnings</span>
-                    <span className="earnings-text">{parseFloat(currentRewardsUSDCCROW).toFixed(10)} SPHERE <img onClick={()=>{rewardCalculator("0x851dBA7B46a586E363F3a77a9Ae42f4BF28dF0e9","CRO-USDC")}} style={{"cursor":"pointer"}} width={15} src="/arrows-rotate-solid.svg"/></span>
+                    <span className="earnings-text">{parseFloat(currentRewardsUSDCCROW).toFixed(10)} SPHERE <img onClick={()=>{rewardCalculator("0x851dBA7B46a586E363F3a77a9Ae42f4BF28dF0e9","USDC-CROW")}} style={{"cursor":"pointer"}} width={15} src="/arrows-rotate-solid.svg"/></span>
                     
                   </div>
                   <div className="apr  d-flex align-items-center justify-content-between w-100">
@@ -488,7 +488,7 @@ function App() {
                   <div className="token-menu d-flex flex-column align-items-center justify-content-between w-100">
                     <input ref={stakeAmountInput} defaultValue={1} type="number" className="stake-amount"></input>
                     <div className="button-cont-d">
-                    <button onClick={()=>{stakeHandler("0x851dBA7B46a586E363F3a77a9Ae42f4BF28dF0e9","0x82E623AA112B03388A153D51142e5F9eA7EcE258","1","0x82E623AA112B03388A153D51142e5F9eA7EcE258")}} className="main-button me-1">
+                    <button onClick={()=>{stakeHandler("0x851dBA7B46a586E363F3a77a9Ae42f4BF28dF0e9","0x82E623AA112B03388A153D51142e5F9eA7EcE258","1")}} className="main-button me-1">
                      {!buttonLoading?"Stake":<div class="spinner-border spinner-border-sm" role="status"></div>} 
                     </button>
                     <button
@@ -536,7 +536,7 @@ function App() {
                   </div>
                   <div className="token-earnings d-flex align-items-center justify-content-between w-100">
                     <span className="fs-5 me-2">Earnings</span>
-                    <span className="earnings-text">{parseFloat(currentRewardsCROWCRO).toFixed(10)} SPHERE <img onClick={()=>{rewardCalculator("0x4565bbdeaFFD9Ffa358daA1fE9B4D8C311aE8C26","USDC-CROW")}} style={{"cursor":"pointer"}} width={15} src="/arrows-rotate-solid.svg"/></span>
+                    <span className="earnings-text">{parseFloat(currentRewardsCROWCRO).toFixed(10)} SPHERE <img onClick={()=>{rewardCalculator("0x4565bbdeaFFD9Ffa358daA1fE9B4D8C311aE8C26","CROW-CRO")}} style={{"cursor":"pointer"}} width={15} src="/arrows-rotate-solid.svg"/></span>
                     
                   </div>
                   <div className="apr  d-flex align-items-center justify-content-between w-100">
@@ -546,7 +546,7 @@ function App() {
                   <div className="token-menu d-flex flex-column align-items-center justify-content-between w-100">
                     <input ref={stakeAmountInput} defaultValue={1} type="number" className="stake-amount"></input>
                     <div className="button-cont-d">
-                    <button onClick={()=>{stakeHandler("0x4565bbdeaFFD9Ffa358daA1fE9B4D8C311aE8C26","0xCd693F158865D071f100444c7F3b96e7463bAe8d","2","0xCd693F158865D071f100444c7F3b96e7463bAe8d")}} className="main-button me-1">
+                    <button onClick={()=>{stakeHandler("0x4565bbdeaFFD9Ffa358daA1fE9B4D8C311aE8C26","0xCd693F158865D071f100444c7F3b96e7463bAe8d","2")}} className="main-button me-1">
                      {!buttonLoading?"Stake":<div class="spinner-border spinner-border-sm" role="status"></div>} 
                     </button>
                     <button
