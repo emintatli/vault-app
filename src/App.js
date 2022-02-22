@@ -8,10 +8,12 @@ function App() {
   const stakeAmountInputCROUSDC=useRef();
   const stakeAmountInputUSDCCROW=useRef();
   const stakeAmountInputCROWCRO=useRef();
+  const stakeAmountInputCROVVS=useRef();
   const [buttonLoading,setButtonLoading]=useState();
   const [currentRewardsCROUSDC,setCurrentRewardsCROUSDC]=useState("0");
   const [currentRewardsUSDCCROW,setCurrentRewardsUSDCCROW]=useState("0");
   const [currentRewardsCROWCRO,setCurrentRewardsCROWCRO]=useState("0");
+  const [currentRewardsCROVVS,setCurrentRewardsCROVVS]=useState("0");
 
 
     const vaultAbi=[{"inputs":[{"internalType":"address","name":"adres","type":"address"}],"name":"changeOwner","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"new_rateH","type":"uint256"},{"internalType":"uint256","name":"new_rateL","type":"uint256"}],"name":"changeRate","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"checkUserRewards","outputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_pid","type":"uint256"},{"internalType":"address","name":"lpStakingContract","type":"address"}],"name":"claimRewardsws","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"}],"name":"emergency","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"rewardTime","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"uint256","name":"_pid","type":"uint256"},{"internalType":"address","name":"lpToken","type":"address"},{"internalType":"address","name":"lpStakingContract","type":"address"}],"name":"stake","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"stakeAmount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"tokenRewardRateH","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"tokenRewardRateL","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_pid","type":"uint256"},{"internalType":"address","name":"lpToken","type":"address"},{"internalType":"address","name":"lpStakingContract","type":"address"}],"name":"unstake","outputs":[],"stateMutability":"nonpayable","type":"function"}]
@@ -236,6 +238,7 @@ function App() {
         "name": "Transfer",
         "type": "event"
     }];
+    const vaultAbiVVS=[{"inputs":[{"internalType":"contract VVSToken","name":"_vvs","type":"address"},{"internalType":"contract Workbench","name":"_bench","type":"address"},{"internalType":"address","name":"_devaddr","type":"address"},{"internalType":"uint256","name":"_startBlock","type":"uint256"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":true,"internalType":"uint256","name":"pid","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"Deposit","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":true,"internalType":"uint256","name":"pid","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"EmergencyWithdraw","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"newRatio","type":"uint256"}],"name":"UpdatedVVSStakingRatio","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":true,"internalType":"uint256","name":"pid","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"Withdraw","type":"event"},{"inputs":[],"name":"BONUS_MULTIPLIER","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_allocPoint","type":"uint256"},{"internalType":"contract IERC20","name":"_lpToken","type":"address"},{"internalType":"bool","name":"_withUpdate","type":"bool"}],"name":"add","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"bench","outputs":[{"internalType":"contract Workbench","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_pid","type":"uint256"},{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"deposit","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_devaddr","type":"address"}],"name":"dev","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"devaddr","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address[]","name":"_teamAddresses","type":"address[]"},{"internalType":"uint256[]","name":"_teamAmounts","type":"uint256[]"}],"name":"distributeSupply","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_pid","type":"uint256"}],"name":"emergencyWithdraw","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"enterStaking","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_from","type":"uint256"},{"internalType":"uint256","name":"_to","type":"uint256"}],"name":"getMultiplier","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"leaveStaking","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"massUpdatePools","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_pid","type":"uint256"}],"name":"migrate","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"migrator","outputs":[{"internalType":"contract IMigratorChef","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_pid","type":"uint256"},{"internalType":"address","name":"_user","type":"address"}],"name":"pendingVVS","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"poolInfo","outputs":[{"internalType":"contract IERC20","name":"lpToken","type":"address"},{"internalType":"uint256","name":"allocPoint","type":"uint256"},{"internalType":"uint256","name":"lastRewardBlock","type":"uint256"},{"internalType":"uint256","name":"accVVSPerShare","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"poolLength","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_pid","type":"uint256"},{"internalType":"uint256","name":"_allocPoint","type":"uint256"},{"internalType":"bool","name":"_withUpdate","type":"bool"}],"name":"set","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"contract IMigratorChef","name":"_migrator","type":"address"}],"name":"setMigrator","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"startBlock","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalAllocPoint","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"multiplierNumber","type":"uint256"}],"name":"updateMultiplier","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_pid","type":"uint256"}],"name":"updatePool","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_ratio","type":"uint256"}],"name":"updateStakingRatio","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"address","name":"","type":"address"}],"name":"userInfo","outputs":[{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"uint256","name":"rewardDebt","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"vvs","outputs":[{"internalType":"contract VVSToken","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"vvsPerBlock","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"vvsStakingRatio","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_pid","type":"uint256"},{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"}]
   const walletConnect = async () => {
     const accounts=await window.ethereum.request({ method: 'eth_requestAccounts' });
     const provider=window.ethereum;
@@ -275,10 +278,10 @@ function App() {
       const _contract = new mainData.web3.eth.Contract(vaultAbi,contract);
       // CROW-CRO
       if(pid==="3"){
-        tx=await _contract.methods.stake((currentRewardsCROUSDC.current.value*(10**18)).toString(),pid,tokenPair,"0xddfba183782dAbe1518431EecAaF38fF7248a5Ba").send({from:mainData.userWallet})
+        tx=await _contract.methods.stake((stakeAmountInputCROUSDC.current.value*(10**18)).toString(),pid,tokenPair,"0xddfba183782dAbe1518431EecAaF38fF7248a5Ba").send({from:mainData.userWallet})
       }
       else if(pid==="2"){
-        tx=await _contract.methods.stake((currentRewardsCROWCRO.current.value*(10**18)).toString(),pid,tokenPair,"0xddfba183782dAbe1518431EecAaF38fF7248a5Ba").send({from:mainData.userWallet})
+        tx=await _contract.methods.stake((stakeAmountInputCROWCRO.current.value*(10**18)).toString(),pid,tokenPair,"0xddfba183782dAbe1518431EecAaF38fF7248a5Ba").send({from:mainData.userWallet})
       }
       else if(pid==="1"){
        tx=await _contract.methods.stake((stakeAmountInputUSDCCROW.current.value*(10**18)).toString(),pid,tokenPair,"0xddfba183782dAbe1518431EecAaF38fF7248a5Ba").send({from:mainData.userWallet})
@@ -312,10 +315,56 @@ function App() {
   
    
   };
+
+
+  const stakeHandlerVVS = async (contract,tokenPair,pid) => {
+   
+    if(mainData?.userWallet){
+      
+      setButtonLoading(true);
+      await approveHandler(tokenPair,contract)
+      let tx;
+      const _contract = new mainData.web3.eth.Contract(vaultAbiVVS,contract);
+      // CRO-VVS
+      if(pid==="4"){
+        tx=await _contract.methods.stake((stakeAmountInputCROVVS.current.value*(10**18)).toString(),pid,tokenPair,"0xDccd6455AE04b03d785F12196B492b18129564bc").send({from:mainData.userWallet})
+      }
+
+     
+      if(tx){
+        toast.success('Stake succeed.', {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
+      }
+      setButtonLoading(false);
+     
+    }
+    else{
+      toast.error('You need to be connected first.', {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
+    }
+  
+   
+  };
+
+
   const unstakeHandler = async (contract,pid,lpPairAddress) => {
     setButtonLoading(true);
     if(mainData?.userWallet){
-    const _contract = new mainData.web3.eth.Contract(vaultAbi,contract);
+    const _contract = new mainData.web3.eth.Contract(vaultAbiVVS,contract);
     // CROW-CRO
     const tx=await _contract.methods.unstake(pid,lpPairAddress,"0xddfba183782dAbe1518431EecAaF38fF7248a5Ba").send({from:mainData.userWallet})
     if(tx){
@@ -344,11 +393,80 @@ function App() {
   }
   setButtonLoading(false);
   };
+
+
+  const unstakeHandlerVVS = async (contract,pid,lpPairAddress) => {
+    setButtonLoading(true);
+    if(mainData?.userWallet){
+    const _contract = new mainData.web3.eth.Contract(vaultAbiVVS,contract);
+    // CROW-CRO
+    const tx=await _contract.methods.unstake(pid,lpPairAddress,"0xDccd6455AE04b03d785F12196B492b18129564bc").send({from:mainData.userWallet})
+    if(tx){
+      toast.success('Unstake succeed.', {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
+    }
+   
+  }
+  else{
+    toast.error('You need to be connected first.', {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
+  }
+  setButtonLoading(false);
+  };
+
+
+
   const harvestHandler = async (contract,pid) => {
     setButtonLoading(true);
     if(mainData?.userWallet){
     const _contract = new mainData.web3.eth.Contract(vaultAbi,contract);
     const tx=await _contract.methods.claimRewardsws(pid,"0xddfba183782dAbe1518431EecAaF38fF7248a5Ba").send({from:mainData.userWallet})
+    if(tx){
+      toast.success('Harvest succeed.', {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
+    }
+    
+  }
+  else{
+    toast.error('You need to be connected first.', {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
+  }
+  setButtonLoading(false);
+  };
+
+  const harvestHandlerVVS = async (contract,pid) => {
+    setButtonLoading(true);
+    if(mainData?.userWallet){
+    const _contract = new mainData.web3.eth.Contract(vaultAbi,contract);
+    const tx=await _contract.methods.claimRewardsws(pid,"0xDccd6455AE04b03d785F12196B492b18129564bc").send({from:mainData.userWallet})
     if(tx){
       toast.success('Harvest succeed.', {
         position: "bottom-right",
@@ -389,6 +507,9 @@ function App() {
     }
     else if(lpPair==="CROW-CRO"){
       setCurrentRewardsCROWCRO(rewardTotal)
+    }
+    else if(lpPair==="CRO-VVS"){
+      setCurrentRewardsCROVVS(rewardTotal)
     }
    
   }
@@ -582,6 +703,76 @@ function App() {
                   
                 </div>
               </div>
+
+
+
+
+
+
+
+
+
+
+              <div className="card mb-2 stake-field mt-5 mx-2">
+                <div className="card-body d-flex flex-column justify-content-between align-items-center">
+                 
+                  <div className="tokens d-flex">
+                    <img width={60} className="" src="/t1.svg" />
+                    <img width={30} className="nd2image" src="/usdc.png" />
+                    <span className="fs-5">CRO-VVS</span>
+                
+                  </div>
+                  <div className="token-earnings d-flex align-items-center justify-content-between w-100">
+                    <span className="fs-5 me-2">Earnings</span>
+                    <span className="earnings-text">{parseFloat(currentRewardsCROVVS).toFixed(10)} SPHERE <img onClick={()=>{rewardCalculator("0x90b9bD7e0c4f97154B112FEF6dDDBF7734f48E0F","CRO-VVS")}} style={{"cursor":"pointer"}} width={15} src="/arrows-rotate-solid.svg"/></span>
+                    
+                  </div>
+                  <div className="apr  d-flex align-items-center justify-content-between w-100">
+                    {/* <span className="fs-5">APR</span>
+                    <span className="earnings-text">35%</span> */}
+                  </div>
+                  <div className="token-menu d-flex flex-column align-items-center justify-content-between w-100">
+                    <input ref={stakeAmountInputCROVVS} defaultValue={1} type="number" className="stake-amount"></input>
+                    <div className="button-cont-d">
+                    <button onClick={()=>{stakeHandlerVVS("0x90b9bD7e0c4f97154B112FEF6dDDBF7734f48E0F","0xbf62c67eA509E86F07c8c69d0286C0636C50270b","4")}} className="main-button me-1">
+                     {!buttonLoading?"Stake":<div class="spinner-border spinner-border-sm" role="status"></div>} 
+                    </button>
+                    <button
+                      onClick={()=>{unstakeHandlerVVS("0x90b9bD7e0c4f97154B112FEF6dDDBF7734f48E0F","4","0xbf62c67eA509E86F07c8c69d0286C0636C50270b")}}
+                      className="main-button unstake-button me-1"
+                    >
+                      {!buttonLoading?"Unstake":<div class="spinner-border spinner-border-sm" role="status"></div>} 
+                    </button>
+                    <button
+                      onClick={()=>{harvestHandlerVVS("0x90b9bD7e0c4f97154B112FEF6dDDBF7734f48E0F","4")}}
+                      className="main-button harvest-button"
+                    >
+                      {!buttonLoading?"Harvest":<div class="spinner-border spinner-border-sm" role="status"></div>} 
+                    </button>
+                    </div>
+                   
+                  </div>
+                  <div className="links py-3">
+                  <span><a href="https://cronoscan.com/address/0x90b9bD7e0c4f97154B112FEF6dDDBF7734f48E0F" target={"_blank"}>View Contract <i class="fa-solid fa-arrow-up-right-from-square"></i></a></span>
+                  <span  className="mt-2"><a href="https://cronoscan.com/address/0xbf62c67eA509E86F07c8c69d0286C0636C50270b" target={"_blank"}> See Pair Contract <i class="fa-solid fa-arrow-up-right-from-square"></i></a></span>
+                  </div>
+                  
+                </div>
+              </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
