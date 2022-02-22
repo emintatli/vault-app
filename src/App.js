@@ -10,11 +10,15 @@ function App() {
   const stakeAmountInputUSDCCROW=useRef();
   const stakeAmountInputCROWCRO=useRef();
   const stakeAmountInputCROVVS=useRef();
+  const stakeAmountInputCNFTCNO=useRef();
+  const stakeAmountInputDAIUSDC=useRef();
   const [buttonLoading,setButtonLoading]=useState();
   const [currentRewardsCROUSDC,setCurrentRewardsCROUSDC]=useState("0");
   const [currentRewardsUSDCCROW,setCurrentRewardsUSDCCROW]=useState("0");
   const [currentRewardsCROWCRO,setCurrentRewardsCROWCRO]=useState("0");
   const [currentRewardsCROVVS,setCurrentRewardsCROVVS]=useState("0");
+  const [currentRewardsCNFTCNO,setCurrentRewardsCNFTCNO]=useState("0");
+  const [currentRewardsDAIUSDC,setCurrentRewardsDAIUSDC]=useState("0");
 
     const vaultAbiVVS=[{"inputs":[{"internalType":"address","name":"adres","type":"address"}],"name":"changeOwner","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"new_rateH","type":"uint256"},{"internalType":"uint256","name":"new_rateL","type":"uint256"}],"name":"changeRate","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"checkUserRewards","outputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_pid","type":"uint256"},{"internalType":"address","name":"lpStakingContract","type":"address"}],"name":"claimRewardsws","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"}],"name":"emergency","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"rewardTime","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"uint256","name":"_pid","type":"uint256"},{"internalType":"address","name":"lpToken","type":"address"},{"internalType":"address","name":"lpStakingContract","type":"address"}],"name":"stake","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"stakeAmount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"tokenRewardRateH","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"tokenRewardRateL","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_pid","type":"uint256"},{"internalType":"address","name":"lpToken","type":"address"},{"internalType":"address","name":"lpStakingContract","type":"address"}],"name":"unstake","outputs":[],"stateMutability":"nonpayable","type":"function"}]
     
@@ -365,6 +369,55 @@ function App() {
   };
 
 
+  const stakeHandlerChrono = async (contract,tokenPair,pid) => {
+   
+    if(mainData?.userWallet){
+      
+      setButtonLoading(true);
+      await approveHandler(tokenPair,contract)
+      let tx;
+      const _contract = new mainData.web3.eth.Contract(vaultAbiVVS,contract);
+      // CNFT-CNO
+      if(pid==="49"){
+        console.log((bigInt(stakeAmountInputCROVVS.current.value*(10**18))).toString())
+        tx=await _contract.methods.stake((bigInt(stakeAmountInputCROVVS.current.value*(10**18))).toString(),pid,tokenPair,"0x3790F3A1cf8A478042Ec112A70881Dcfa9c7fd2a").send({from:mainData.userWallet})
+      }
+      //DAI-USDC 
+      else if(pid==="9"){
+        console.log((bigInt(stakeAmountInputCROVVS.current.value*(10**18))).toString())
+        tx=await _contract.methods.stake((bigInt(stakeAmountInputCROVVS.current.value*(10**18))).toString(),pid,tokenPair,"0x3790F3A1cf8A478042Ec112A70881Dcfa9c7fd2a").send({from:mainData.userWallet})
+      }
+     
+      if(tx){
+        toast.success('Stake succeed.', {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
+      }
+      setButtonLoading(false);
+     
+    }
+    else{
+      toast.error('You need to be connected first.', {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
+    }
+  
+   
+  };
+
+
   const unstakeHandler = async (contract,pid,lpPairAddress) => {
     setButtonLoading(true);
     if(mainData?.userWallet){
@@ -405,6 +458,39 @@ function App() {
     const _contract = new mainData.web3.eth.Contract(vaultAbiVVS,contract);
     // CROW-CRO
     const tx=await _contract.methods.unstake(pid,lpPairAddress,"0xDccd6455AE04b03d785F12196B492b18129564bc").send({from:mainData.userWallet})
+    if(tx){
+      toast.success('Unstake succeed.', {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
+    }
+   
+  }
+  else{
+    toast.error('You need to be connected first.', {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
+  }
+  setButtonLoading(false);
+  };
+
+  const unstakeHandlerChrono = async (contract,pid,lpPairAddress) => {
+    setButtonLoading(true);
+    if(mainData?.userWallet){
+    const _contract = new mainData.web3.eth.Contract(vaultAbiVVS,contract);
+    // CROW-CRO
+    const tx=await _contract.methods.unstake(pid,lpPairAddress,"0x3790F3A1cf8A478042Ec112A70881Dcfa9c7fd2a").send({from:mainData.userWallet})
     if(tx){
       toast.success('Unstake succeed.', {
         position: "bottom-right",
@@ -498,6 +584,39 @@ function App() {
   setButtonLoading(false);
   };
 
+
+  const harvestHandlerChrono = async (contract,pid) => {
+    setButtonLoading(true);
+    if(mainData?.userWallet){
+    const _contract = new mainData.web3.eth.Contract(vaultAbi,contract);
+    const tx=await _contract.methods.claimRewardsws(pid,"0x3790F3A1cf8A478042Ec112A70881Dcfa9c7fd2a").send({from:mainData.userWallet})
+    if(tx){
+      toast.success('Harvest succeed.', {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
+    }
+    
+  }
+  else{
+    toast.error('You need to be connected first.', {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
+  }
+  setButtonLoading(false);
+  };
+
   const rewardCalculator = async (contract,lpPair) => {
     if(mainData?.userWallet){
     const _contract = new mainData.web3.eth.Contract(vaultAbi,contract);
@@ -514,6 +633,12 @@ function App() {
     }
     else if(lpPair==="CRO-VVS"){
       setCurrentRewardsCROVVS(rewardTotal)
+    }
+    else if(lpPair==="CNFT-CNO"){
+      setCurrentRewardsCNFTCNO(rewardTotal)
+    }
+    else if(lpPair==="DAI-USDC"){
+      setCurrentRewardsDAIUSDC(rewardTotal)
     }
    
   }
@@ -607,7 +732,7 @@ function App() {
                 <div className="card-body d-flex flex-column justify-content-between align-items-center">
                  
                   <div className="tokens d-flex">
-                    <img width={60} className="" src="/t1.svg" />
+                    <img width={60} className="" src="https://crowfi.app/images/tokens/0x285c3329930a3fd3C7c14bC041d3E50e165b1517.svg" />
                     <img width={30} className="nd2image" src="/usdc.png" />
                     <span className="fs-5">USDC-CROW</span>
                 
@@ -666,7 +791,7 @@ function App() {
                  
                   <div className="tokens d-flex">
                     <img width={60} className="" src="/t1.svg" />
-                    <img width={30} className="nd2image" src="/usdc.png" />
+                    <img width={30} className="nd2image" src="https://crowfi.app/images/tokens/0x285c3329930a3fd3C7c14bC041d3E50e165b1517.svg" />
                     <span className="fs-5">CROW-CRO</span>
                 
                   </div>
@@ -722,7 +847,7 @@ function App() {
                  
                   <div className="tokens d-flex">
                     <img width={60} className="" src="/t1.svg" />
-                    <img width={30} className="nd2image" src="/usdc.png" />
+                    <img width={30} className="nd2image" src="https://vvs.finance/images/tokens/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03.svg" />
                     <span className="fs-5">CRO-VVS</span>
                 
                   </div>
@@ -768,6 +893,109 @@ function App() {
 
 
 
+
+
+
+
+
+              <div className="card mb-2 stake-field mt-5 mx-2">
+                <div className="card-body d-flex flex-column justify-content-between align-items-center">
+                 
+                  <div className="tokens d-flex">
+                    <img width={60} className="" src="https://chronoswap.org/images/tokens/0x322e21dcAcE43d319646756656b29976291d7C76.svg" />
+                    <img width={30} className="nd2image" src="https://chronoswap.org/images/tokens/0xE2589867ad472bD1Aa46407c182E13c08f8Eadc9.svg" />
+                    <span className="fs-5">CNFT-CNO</span>
+                
+                  </div>
+                  <div className="token-earnings d-flex align-items-center justify-content-between w-100">
+                    <span className="fs-5 me-2">Earnings</span>
+                    <span className="earnings-text">{parseFloat(currentRewardsCNFTCNO).toFixed(10)} SPHERE <img onClick={()=>{rewardCalculator("0xC06d6628D388359a5084288D34E6baB7a473af2B","CNFT-CNO")}} style={{"cursor":"pointer"}} width={15} src="/arrows-rotate-solid.svg"/></span>
+                    
+                  </div>
+                  <div className="apr  d-flex align-items-center justify-content-between w-100">
+                    {/* <span className="fs-5">APR</span>
+                    <span className="earnings-text">35%</span> */}
+                  </div>
+                  <div className="token-menu d-flex flex-column align-items-center justify-content-between w-100">
+                    <input ref={stakeAmountInputCNFTCNO} defaultValue={1} type="number" className="stake-amount"></input>
+                    <div className="button-cont-d">
+                    <button onClick={()=>{stakeHandlerChrono("0xC06d6628D388359a5084288D34E6baB7a473af2B","0xf91F9B62eE4c377C38726b53F8e2761a678B3F88","49")}} className="main-button me-1">
+                     {!buttonLoading?"Stake":<div class="spinner-border spinner-border-sm" role="status"></div>} 
+                    </button>
+                    <button
+                      onClick={()=>{unstakeHandlerChrono("0xC06d6628D388359a5084288D34E6baB7a473af2B","49","0xf91F9B62eE4c377C38726b53F8e2761a678B3F88")}}
+                      className="main-button unstake-button me-1"
+                    >
+                      {!buttonLoading?"Unstake":<div class="spinner-border spinner-border-sm" role="status"></div>} 
+                    </button>
+                    <button
+                      onClick={()=>{harvestHandlerChrono("0xC06d6628D388359a5084288D34E6baB7a473af2B","49")}}
+                      className="main-button harvest-button"
+                    >
+                      {!buttonLoading?"Harvest":<div class="spinner-border spinner-border-sm" role="status"></div>} 
+                    </button>
+                    </div>
+                   
+                  </div>
+                  <div className="links py-3">
+                  <span><a href="https://cronoscan.com/address/0xC06d6628D388359a5084288D34E6baB7a473af2B" target={"_blank"}>View Contract <i class="fa-solid fa-arrow-up-right-from-square"></i></a></span>
+                  <span  className="mt-2"><a href="https://cronoscan.com/address/0xf91F9B62eE4c377C38726b53F8e2761a678B3F88" target={"_blank"}> See Pair Contract <i class="fa-solid fa-arrow-up-right-from-square"></i></a></span>
+                  </div>
+                  
+                </div>
+              </div>
+
+
+
+
+
+
+              <div className="card mb-2 stake-field mt-5 mx-2">
+                <div className="card-body d-flex flex-column justify-content-between align-items-center">
+                 
+                  <div className="tokens d-flex">
+                    <img width={60} className="" src="https://chronoswap.org/images/tokens/0xF2001B145b43032AAF5Ee2884e456CCd805F677D.svg" />
+                    <img width={30} className="nd2image" src="/usdc.png" />
+                    <span className="fs-5">DAI-USDC</span>
+                
+                  </div>
+                  <div className="token-earnings d-flex align-items-center justify-content-between w-100">
+                    <span className="fs-5 me-2">Earnings</span>
+                    <span className="earnings-text">{parseFloat(currentRewardsDAIUSDC).toFixed(10)} SPHERE <img onClick={()=>{rewardCalculator("0xE3eEa752Ab42EdF2D432C814A0D66E87A59e42F0","DAI-USDC")}} style={{"cursor":"pointer"}} width={15} src="/arrows-rotate-solid.svg"/></span>
+                    
+                  </div>
+                  <div className="apr  d-flex align-items-center justify-content-between w-100">
+                    {/* <span className="fs-5">APR</span>
+                    <span className="earnings-text">35%</span> */}
+                  </div>
+                  <div className="token-menu d-flex flex-column align-items-center justify-content-between w-100">
+                    <input ref={stakeAmountInputDAIUSDC} defaultValue={1} type="number" className="stake-amount"></input>
+                    <div className="button-cont-d">
+                    <button onClick={()=>{stakeHandlerChrono("0xE3eEa752Ab42EdF2D432C814A0D66E87A59e42F0","0x0bfed62c922b14b9a47Ab800c89A3a952911Ed9C","9")}} className="main-button me-1">
+                     {!buttonLoading?"Stake":<div class="spinner-border spinner-border-sm" role="status"></div>} 
+                    </button>
+                    <button
+                      onClick={()=>{unstakeHandlerChrono("0xE3eEa752Ab42EdF2D432C814A0D66E87A59e42F0","9","0x0bfed62c922b14b9a47Ab800c89A3a952911Ed9C")}}
+                      className="main-button unstake-button me-1"
+                    >
+                      {!buttonLoading?"Unstake":<div class="spinner-border spinner-border-sm" role="status"></div>} 
+                    </button>
+                    <button
+                      onClick={()=>{harvestHandlerChrono("0xE3eEa752Ab42EdF2D432C814A0D66E87A59e42F0","9")}}
+                      className="main-button harvest-button"
+                    >
+                      {!buttonLoading?"Harvest":<div class="spinner-border spinner-border-sm" role="status"></div>} 
+                    </button>
+                    </div>
+                   
+                  </div>
+                  <div className="links py-3">
+                  <span><a href="https://cronoscan.com/address/0xE3eEa752Ab42EdF2D432C814A0D66E87A59e42F0" target={"_blank"}>View Contract <i class="fa-solid fa-arrow-up-right-from-square"></i></a></span>
+                  <span  className="mt-2"><a href="https://cronoscan.com/address/0x0bfed62c922b14b9a47Ab800c89A3a952911Ed9C" target={"_blank"}> See Pair Contract <i class="fa-solid fa-arrow-up-right-from-square"></i></a></span>
+                  </div>
+                  
+                </div>
+              </div>
 
 
 

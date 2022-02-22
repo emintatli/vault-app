@@ -108,8 +108,4 @@ interface Staking {
 
     function withdraw(uint256 pid, uint256 _amount) external;
 
-    function pendingVVS(uint256 _pid, address _user)
-        external
-        view
-        returns (uint256 pending);
 }
