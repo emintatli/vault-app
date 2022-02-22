@@ -379,13 +379,11 @@ function App() {
       const _contract = new mainData.web3.eth.Contract(vaultAbiVVS,contract);
       // CNFT-CNO
       if(pid==="49"){
-        console.log((bigInt(stakeAmountInputCROVVS.current.value*(10**18))).toString())
-        tx=await _contract.methods.stake((bigInt(stakeAmountInputCROVVS.current.value*(10**18))).toString(),pid,tokenPair,"0x3790F3A1cf8A478042Ec112A70881Dcfa9c7fd2a").send({from:mainData.userWallet})
+        tx=await _contract.methods.stake((bigInt(stakeAmountInputCNFTCNO.current.value*(10**18))).toString(),pid,tokenPair,"0x3790F3A1cf8A478042Ec112A70881Dcfa9c7fd2a").send({from:mainData.userWallet})
       }
       //DAI-USDC 
       else if(pid==="9"){
-        console.log((bigInt(stakeAmountInputCROVVS.current.value*(10**18))).toString())
-        tx=await _contract.methods.stake((bigInt(stakeAmountInputCROVVS.current.value*(10**18))).toString(),pid,tokenPair,"0x3790F3A1cf8A478042Ec112A70881Dcfa9c7fd2a").send({from:mainData.userWallet})
+        tx=await _contract.methods.stake((bigInt(stakeAmountInputDAIUSDC.current.value*(10**18))).toString(),pid,tokenPair,"0x3790F3A1cf8A478042Ec112A70881Dcfa9c7fd2a").send({from:mainData.userWallet})
       }
      
       if(tx){
