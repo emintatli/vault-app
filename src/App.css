@@ -25,6 +25,36 @@ body{
   align-items: center;
   justify-content: center;
 }
+.input-container{
+  position: relative;
+}
+.max-button{
+  position: absolute;
+  right: 10px;
+  top:14px;
+  cursor:pointer;
+  -webkit-box-align: center;
+  align-items: center;
+  border: 0px;
+  box-shadow: rgb(14 14 44 / 40%) 0px -1px 0px 0px inset;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: inherit;
+  font-weight: 600;
+  -webkit-box-pack: center;
+  justify-content: center;
+  letter-spacing: 0.03em;
+  line-height: 1;
+  opacity: 1;
+  outline: 0px;
+  transition: background-color 0.2s ease 0s, opacity 0.2s ease 0s;
+  font-size: 15px;
+  background-color: rgb(4, 200, 214);
+  color: rgb(255, 255, 255);
+  border-radius: 50px;
+  height: 30px;
+
+}
 .tokens {
   position: absolute;
   top:20px;
