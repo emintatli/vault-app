@@ -3,6 +3,7 @@ import Web3 from "web3";
 import { useState ,useRef} from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import bigInt from "big-integer";
 function App() {
   const [mainData,setMainData]=useState();
   const stakeAmountInputCROUSDC=useRef();
@@ -280,13 +281,13 @@ function App() {
       const _contract = new mainData.web3.eth.Contract(vaultAbi,contract);
       // CROW-CRO
       if(pid==="3"){
-        tx=await _contract.methods.stake((stakeAmountInputCROUSDC.current.value*(10**18)).toString(),pid,tokenPair,"0xddfba183782dAbe1518431EecAaF38fF7248a5Ba").send({from:mainData.userWallet})
+        tx=await _contract.methods.stake(bigInt(stakeAmountInputCROUSDC.current.value*(10**18)).toString(),pid,tokenPair,"0xddfba183782dAbe1518431EecAaF38fF7248a5Ba").send({from:mainData.userWallet})
       }
       else if(pid==="2"){
-        tx=await _contract.methods.stake((stakeAmountInputCROWCRO.current.value*(10**18)).toString(),pid,tokenPair,"0xddfba183782dAbe1518431EecAaF38fF7248a5Ba").send({from:mainData.userWallet})
+        tx=await _contract.methods.stake(bigInt(stakeAmountInputCROWCRO.current.value*(10**18)).toString(),pid,tokenPair,"0xddfba183782dAbe1518431EecAaF38fF7248a5Ba").send({from:mainData.userWallet})
       }
       else if(pid==="1"){
-       tx=await _contract.methods.stake((stakeAmountInputUSDCCROW.current.value*(10**18)).toString(),pid,tokenPair,"0xddfba183782dAbe1518431EecAaF38fF7248a5Ba").send({from:mainData.userWallet})
+       tx=await _contract.methods.stake(bigInt(stakeAmountInputUSDCCROW.current.value*(10**18)).toString(),pid,tokenPair,"0xddfba183782dAbe1518431EecAaF38fF7248a5Ba").send({from:mainData.userWallet})
       }
      
       if(tx){
@@ -329,7 +330,8 @@ function App() {
       const _contract = new mainData.web3.eth.Contract(vaultAbiVVS,contract);
       // CRO-VVS
       if(pid==="4"){
-        tx=await _contract.methods.stake((stakeAmountInputCROVVS.current.value*(10**18)).toString(),pid,tokenPair,"0xDccd6455AE04b03d785F12196B492b18129564bc").send({from:mainData.userWallet})
+        console.log((bigInt(stakeAmountInputCROVVS.current.value*(10**18))).toString())
+        tx=await _contract.methods.stake((bigInt(stakeAmountInputCROVVS.current.value*(10**18))).toString(),pid,tokenPair,"0xDccd6455AE04b03d785F12196B492b18129564bc").send({from:mainData.userWallet})
       }
 
      
