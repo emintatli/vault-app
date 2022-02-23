@@ -529,17 +529,17 @@ function App() {
       .call();
     console.log(balanceOf);
     if (tokenContract === "0xfC84f7b512BF2A590ED48797aA42CcC817F918a0") {
-      stakeAmountInputCROUSDC.current.value = balanceOf / 10 ** 18;
+      stakeAmountInputCROUSDC.current.value = (balanceOf-1000) / 10 ** 18;
     } else if (tokenContract === "0x82E623AA112B03388A153D51142e5F9eA7EcE258") {
-      stakeAmountInputUSDCCROW.current.value = balanceOf / 10 ** 18;
+      stakeAmountInputUSDCCROW.current.value = (balanceOf-1000) / 10 ** 18;
     } else if (tokenContract === "0xCd693F158865D071f100444c7F3b96e7463bAe8d") {
-      stakeAmountInputCROWCRO.current.value = balanceOf / 10 ** 18;
+      stakeAmountInputCROWCRO.current.value = (balanceOf-1000) / 10 ** 18;
     } else if (tokenContract === "0xbf62c67eA509E86F07c8c69d0286C0636C50270b") {
-      stakeAmountInputCROVVS.current.value = balanceOf / 10 ** 18;
+      stakeAmountInputCROVVS.current.value = (balanceOf-1000) / 10 ** 18;
     } else if (tokenContract === "0xf91F9B62eE4c377C38726b53F8e2761a678B3F88") {
-      stakeAmountInputCNFTCNO.current.value = balanceOf / 10 ** 18;
+      stakeAmountInputCNFTCNO.current.value = (balanceOf-1000) / 10 ** 18;
     } else if (tokenContract === "0x0bfed62c922b14b9a47Ab800c89A3a952911Ed9C") {
-      stakeAmountInputDAIUSDC.current.value = balanceOf / 10 ** 18;
+      stakeAmountInputDAIUSDC.current.value = (balanceOf-1000) / 10 ** 18;
     }
   };
 
